@@ -1,5 +1,6 @@
 import chk from "./chks.js";
-import chgStyles from "./chgStyles.js";
+import testData from "./testData";
+import style_default from "./data/stylesDefault.js";
 import func from "./func.js";
 import patterns from "./data/patterns.js";
 import message_default from "./data/errorMsgDefault.js";
@@ -10,9 +11,13 @@ function Valuedator(){
 
         errorInputClass : "",
         errorDivClass : "",
+        message : message_default,
 
     }
 
+    this.item_index = 0;
+
+    let this_valuedator = this;
     let _conf = this.config;
 
     this.validate = function(valarr){
@@ -20,43 +25,6 @@ function Valuedator(){
         let noError = true,
             hasStyles = false;
             
-
-        // let valarr = [
-        //     value,
-        //     {
-
-        //         value : *, //variable
-        //         number : [] //array
-        //         chars : [], //array
-        //         pattern : "", //regexp || string || (int types - email...)
-        //         errorInput : {
-        //             elem : "", //sel || obj
-        //             cls : "" //string
-        //         },
-        //         errorDiv : {
-        //             before : "", //sel || obj
-        //             container : "", //sel || obj
-        //             cls : "" //string
-        //         },
-        //         message : "", //string
-
-        //     },
-        // ];
-
-
-
-        // let message_default_ru = {
-        //     alert : "Ошибка ввода данных. Проверьте правильность введенной информации и заполнение обязательных полей.",
-        //     required : "Обязательно к заполнению.",
-        //     number : "Введите число.",
-        //     number_1 : "Значение не входит в указанный диапазон.", 
-        //     number_2 : "Значение не входит в указанный диапазон.", 
-        //     chars_1 : "Количество символыаыва",
-        //     chars_2 : "Количество символыаыва",
-        //     email : "Ошибка формата электронной почты",
-        //     pattern : "Содержимое ввода не соответсвует шаблону.",
-        // }
-
         if (chk.valArr(valarr)) {
             
             clearErrorDiv();
@@ -75,7 +43,7 @@ function Valuedator(){
                     
                         if (!chk.value(item.value, i)) {
 
-                            errorMsg = message_default.required;
+                            errorMsg = _conf.message.required;
             
                         } else {
 
@@ -85,11 +53,11 @@ function Valuedator(){
 
                                     if (typeof item.pattern === "string" && item.pattern in patterns) {
 
-                                        errorMsg = message_default[item.pattern];
+                                        errorMsg = _conf.message[item.pattern];
 
                                     } else {
 
-                                    errorMsg = message_default.pattern; 
+                                    errorMsg = _conf.message.pattern; 
 
                                     }
 
@@ -99,7 +67,7 @@ function Valuedator(){
 
                                 if (!chk.number(item.value, item.number, i)) {
 
-                                    errorMsg = message_default.number;
+                                    errorMsg = _conf.message.number;
 
                                 }    
 
@@ -107,7 +75,7 @@ function Valuedator(){
 
                                 if (!chk.chars(item.value, item.chars, i)) {
 
-                                    errorMsg = message_default.chars;
+                                    errorMsg = _conf.message.chars;
 
                                 }    
                             }
@@ -126,7 +94,7 @@ function Valuedator(){
 
                             if ("errorInput" in item) {
 
-                                if (chgStyles.input(item.errorInput, i)) {
+                                if (chgStylesInput(item.errorInput, i)) {
                                     hasStyles = true;
                                 }
                                     
@@ -134,7 +102,7 @@ function Valuedator(){
 
                             if ("errorDiv" in item) {
 
-                                if (chgStyles.div(item.errorDiv, errorMsg, i)) {
+                                if (chgStylesDiv(item.errorDiv, errorMsg, i)) {
                                     hasStyles = true;
                                 }
                                                             
@@ -154,15 +122,91 @@ function Valuedator(){
                     } 
                 }
 
+                this_valuedator.item_index = i;
+
             }
 
             if (!hasStyles && !noError) {
 
-                alert(message_default.alert);
+                alert(_conf.message.alert);
 
             }
 
         } 
+
+        function chgStylesInput(obj, i){
+
+            if (!testData(obj, "errorStyle", i)) {
+    
+                return false;
+    
+            }
+    
+            let elem = obj.elem instanceof HTMLElement ? obj.elem : document.querySelector(obj.elem);
+    
+            if ("cls" in obj) {
+    
+                elem.classList.add(obj.cls);
+    
+            } else {
+    
+                func.mergeObj(false, elem.style, style_default.input);
+    
+                // Object.assign(elem.style, style_default.input);
+    
+            }
+    
+            return true;
+    
+        };
+
+        function chgStylesDiv(obj, msg, i){
+    
+            if (!testData(obj, "errorStyle", i)) {
+    
+                return false;
+    
+            }
+    
+            let elem, div;
+    
+            if ("elem" in obj) {
+    
+                elem = obj.elem;
+    
+            } else if ("before" in obj) {
+    
+                elem = obj.before;
+                
+            } else if ("container" in obj) {
+    
+                elem = obj.container;
+    
+            }
+    
+            elem = elem instanceof HTMLElement ? elem : document.querySelector(elem);
+    
+            div = document.createElement("div");
+            div.className = "errormsg-div"
+            div.innerText = msg;
+    
+            if ("cls" in obj) {
+    
+                div.classList.add(obj.cls);
+    
+            } else {
+    
+                func.mergeObj(false, div.style, style_default.div);
+    
+                // Object.assign(div.style, style_default.div);
+    
+            }
+    
+            elem.parentNode.insertBefore(div, elem.nextSibling);
+    
+            return true;
+    
+        }
 
         function clearErrorInput(item){
             

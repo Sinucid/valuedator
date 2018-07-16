@@ -24,8 +24,9 @@ export default {
         chars_type : function(chk){return !Array.isArray(chk) || chk.length === 0 || chk[0] !== undefined && typeof chk[0] !== "number" || chk[1] !== undefined && typeof chk[1] !== "number"},
     },
     errorStyle : {
-        no_elem : function(chk){return !("elem" in chk)},
-        elem_type : function(chk){return !chk.elem instanceof HTMLElement || typeof chk.elem !== "string"},
+        no_elem : function(chk){return !("elem" || "before" || "container" in chk)},
+        elem_type : function(chk){let elem = (chk.elem || chk.before || chk.container);
+                                  return !elem instanceof HTMLElement || typeof elem !== "string"},
         cls_type : function(chk){return "cls" in chk && typeof chk.cls !== "string"},
     },
     message : {

@@ -10,7 +10,6 @@ export default {
 
         width : "100%",
         color : main_color,
-        // fontWeight : "bold",
         fontStyle : "italic",
         fontSize : "90%",
 
