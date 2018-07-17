@@ -11,8 +11,8 @@ let valarr = [
             elem : "", //sel || obj
             cls : "" //string
         },
-        errorDiv : {
-            elem || before || container : "", //sel || obj
+        errorMessage : {
+            before || container : "", //sel || obj
             cls : "" //string
         },
         message : "", //string

@@ -1,4 +1,4 @@
-import testData from "./testData";
+import dataError from "./dataError";
 import func from "./func.js";
 import patterns from "./data/patterns.js";
 
@@ -6,28 +6,32 @@ function Chk(){
 
     this.valArr = function(arr){
 
-        return testData(arr, "valarr");
+        let innerError = dataError(arr, "valarr");
+
+        return innerError ? innerError : true;
 
     };
 
-    this.arrItem = function(item, i){
+    this.arrItem = function(item){
 
-        return testData(item, "item", i);
+        let innerError = dataError(item, "item");
+
+        return innerError ? innerError : true;
 
     };
 
     this.value = function(value) {
 
-        return value !== "";
+        let innerError = dataError(value, "value");
+
+        return innerError ? innerError : !!String(value) ? true : { msg : "required"}
 
     };
 
-    this.pattern = function(value, pattern, i){
+    this.pattern = function(value, pattern){
 
-        if (!testData(pattern, "pattern", i)) {
-
-            return false;
-
+        if (innerError = dataError(pattern, "pattern")) {
+            return {error : innerError};
         }
 
         if (typeof pattern == "string") {
@@ -44,17 +48,12 @@ function Chk(){
 
     };
 
-    this.number = function(value, range, i) {
+    this.number = function(value, range) {
 
-
-
-        if (!testData(range, "number", i)) {
-
-            return false;
-            
+        if (innerError = dataError(range, "number")) {
+            return {error : innerError};
         }
-
-
+  
         if (range.length == 0) {
 
             if (isNaN(+value)) {
@@ -80,12 +79,10 @@ function Chk(){
 
     };
 
-    this.chars = function(value, chars, i) {
+    this.chars = function(value, chars) {
 
-        if (!testData(chars, "chars", i)) {
-
-            return false;
-            
+        if (innerError = dataError(chars, "chars")) {
+            return {error : innerError};
         }
 
         if (chars.length == 1) {
@@ -101,9 +98,9 @@ function Chk(){
 
     };
 
-    this.message = function(msg, i){
+    this.message = function(msg){
 
-        return testData(msg, "message", i);
+        return dataError(msg, "message");
 
     };
 }

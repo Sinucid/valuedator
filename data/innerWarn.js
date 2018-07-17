@@ -10,6 +10,8 @@ export default {
     chars_type : "The 'chars' property must be an array with 1 - 2 numeric elements.",
     no_elem : "Requires the 'elem', 'before' or 'container' property in the object that describes the error.",
     elem_type : "The 'elem', 'before' or 'container' property must be an HTMLElement or CSS selector.",
+    elem_exists : "Input element does not exist.",
+    container_exists : "Block container for messages with errors does not exist.",
     cls_type : "The 'cls' property must be a string.",
     msg_type : "The 'msg' property must be a string describing the error",
 

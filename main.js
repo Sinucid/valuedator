@@ -1,5 +1,5 @@
 import chk from "./chks.js";
-import testData from "./testData";
+import dataError from "./dataError";
 import style_default from "./data/stylesDefault.js";
 import func from "./func.js";
 import patterns from "./data/patterns.js";
@@ -7,17 +7,16 @@ import message_default from "./data/errorMsgDefault.js";
 
 function Valuedator(){
 
+    // let index = i !== undefined ? " in an array element [" + i + "]," : "";
+    // console.warn("DATA ERROR:" + index + "\r\n" + )
     this.config = {
 
         errorInputClass : "",
-        errorDivClass : "",
+        errorMessageClass : "",
         message : message_default,
 
     }
 
-    this.item_index = 0;
-
-    let this_valuedator = this;
     let _conf = this.config;
 
     this.validate = function(valarr){
@@ -31,98 +30,93 @@ function Valuedator(){
 
             for (let i = 0; i < valarr.length; i++){
 
-                let errorMsg = "",
-                    item = valarr[i];
-                    
     
-                if (chk.arrItem(item, i)) {
+                // if (chk.arrItem(item)) {
                     
-                    if (func.isObject(item)) {
+                //     if (func.isObject(item)) {
 
-                        clearErrorInput(item);
+                //         clearErrorInput(item);
                     
-                        if (!chk.value(item.value, i)) {
+                //         if (!chk.value(item.value)) {
 
-                            errorMsg = _conf.message.required;
+                //             errorMsg = _conf.message.required;
             
-                        } else {
+                //         } else {
 
-                            if ("pattern" in item) {
+                //             if ("pattern" in item) {
 
-                                if (!chk.pattern(item.value, item.pattern, i)) {
+                //                 if (!chk.pattern(item.value, item.pattern)) {
 
-                                    if (typeof item.pattern === "string" && item.pattern in patterns) {
+                //                     if (typeof item.pattern === "string" && item.pattern in patterns) {
 
-                                        errorMsg = _conf.message[item.pattern];
+                //                         errorMsg = _conf.message[item.pattern];
 
-                                    } else {
+                //                     } else {
 
-                                    errorMsg = _conf.message.pattern; 
+                //                     errorMsg = _conf.message.pattern; 
 
-                                    }
+                //                     }
 
-                                }    
+                //                 }    
 
-                            } else if ("number" in item) {
+                //             } else if ("number" in item) {
 
-                                if (!chk.number(item.value, item.number, i)) {
+                //                 if (!chk.number(item.value, item.number)) {
 
-                                    errorMsg = _conf.message.number;
+                //                     errorMsg = _conf.message.number;
 
-                                }    
+                //                 }    
 
-                            } else if ("chars" in item) {
+                //             } else if ("chars" in item) {
 
-                                if (!chk.chars(item.value, item.chars, i)) {
+                //                 if (!chk.chars(item.value, item.chars)) {
 
-                                    errorMsg = _conf.message.chars;
+                //                     errorMsg = _conf.message.chars;
 
-                                }    
-                            }
+                //                 }    
+                //             }
 
-                        }
+                //         }
 
-                        if (errorMsg !== ""){
+                //         if (errorMsg !== ""){
 
-                            if ("message" in item && chk.message(item.message, i)) {
+                //             if ("message" in item && chk.message(item.message)) {
 
-                                errorMsg = item.message;
+                //                 errorMsg = item.message;
 
-                            }
+                //             }
 
-                            noError = false;
+                //             noError = false;
 
-                            if ("errorInput" in item) {
+                //             if ("errorInput" in item) {
 
-                                if (chgStylesInput(item.errorInput, i)) {
-                                    hasStyles = true;
-                                }
+                //                 if (chgStylesInput(item.errorInput)) {
+                //                     hasStyles = true;
+                //                 }
                                     
-                            }
+                //             }
 
-                            if ("errorDiv" in item) {
+                //             if ("errorDiv" in item) {
 
-                                if (chgStylesDiv(item.errorDiv, errorMsg, i)) {
-                                    hasStyles = true;
-                                }
+                //                 if (chgStylesMessage(item.errorDiv, errorMsg)) {
+                //                     hasStyles = true;
+                //                 }
                                                             
-                            }
+                //             }
 
-                        }
+                //         }
                                                                 
-                    } else {
+                //     } else {
 
-                        if (!chk.value(item)) {
+                //         if (!chk.value(item)) {
                             
-                            noError = false;
-                            break;
+                //             noError = false;
+                //             break;
 
-                        }
+                //         }
 
-                    } 
-                }
-
-                this_valuedator.item_index = i;
+                //     } 
+                // }
 
             }
 
@@ -134,25 +128,34 @@ function Valuedator(){
 
         } 
 
-        function chgStylesInput(obj, i){
+        function chgStylesInput(obj){
 
-            if (!testData(obj, "errorStyle", i)) {
+            // if (!dataError(obj, "errorStyleInput")) {
     
-                return false;
+            //     return false;
     
-            }
+            // }
     
-            let elem = obj.elem instanceof HTMLElement ? obj.elem : document.querySelector(obj.elem);
+            let cls,
+                elem = obj.elem instanceof HTMLElement ? obj.elem : document.querySelector(obj.elem);
     
             if ("cls" in obj) {
+
+                cls = obj.cls;
+
+            } else if (_conf.errorInputClass !== "") {
+
+                cls = _conf.errorInputClass;
+
+            }
+
+            if (cls) {
     
-                elem.classList.add(obj.cls);
+                elem.classList.add(cls);
     
             } else {
     
                 func.mergeObj(false, elem.style, style_default.input);
-    
-                // Object.assign(elem.style, style_default.input);
     
             }
     
@@ -160,21 +163,17 @@ function Valuedator(){
     
         };
 
-        function chgStylesDiv(obj, msg, i){
+        function chgStylesMessage(obj, msg){
     
-            if (!testData(obj, "errorStyle", i)) {
+            // if (!dataError(obj, "errorStyleMessage")) {
     
-                return false;
+            //     return false;
     
-            }
+            // }
     
-            let elem, div;
+            let elem, div, cls;
     
-            if ("elem" in obj) {
-    
-                elem = obj.elem;
-    
-            } else if ("before" in obj) {
+            if ("before" in obj) {
     
                 elem = obj.before;
                 
@@ -189,20 +188,37 @@ function Valuedator(){
             div = document.createElement("div");
             div.className = "errormsg-div"
             div.innerText = msg;
-    
+
+           
             if ("cls" in obj) {
+
+                cls = obj.cls;
+
+            } else if (_conf.errorMessageClass !== "") {
+
+                cls = _conf.errorMessageClass;
+
+            }
+  
+            if (cls) {
     
-                div.classList.add(obj.cls);
+                div.classList.add(cls);
     
             } else {
     
                 func.mergeObj(false, div.style, style_default.div);
     
-                // Object.assign(div.style, style_default.div);
-    
             }
-    
-            elem.parentNode.insertBefore(div, elem.nextSibling);
+
+            if ("before" in obj) {
+
+                elem.parentNode.insertBefore(div, elem.nextSibling);
+
+            } else if ("container" in obj){
+
+                elem.appendChild(div);
+
+            }
     
             return true;
     
@@ -211,14 +227,25 @@ function Valuedator(){
         function clearErrorInput(item){
             
             if ("errorInput" in item && "elem" in item.errorInput) {
-                
-                let elem = item.errorInput.elem instanceof HTMLElement ? 
+
+                let cls,
+                    elem = item.errorInput.elem instanceof HTMLElement ? 
                     item.errorInput.elem : 
                     document.querySelector(item.errorInput.elem);
 
-                if ("cls" in item.errorInput) {
+                if ("cls" in item) {
 
-                    elem.classList.remove(item.errorInput.cls)
+                    cls = item.cls;
+    
+                } else if (_conf.errorInputClass !== "") {
+    
+                    cls = _conf.errorInputClass;
+    
+                }
+
+                if (cls) {
+
+                    elem.classList.remove(cls)
 
                 } else {
 
@@ -238,6 +265,11 @@ function Valuedator(){
                 div.parentNode.removeChild(div);
 
             })
+
+        }
+
+        function createWarning(msg){
+
 
         }
 

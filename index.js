@@ -8,8 +8,8 @@ export default {
             valuedator.config.errorInputClass = options.errorInputClass;
         }
 
-        if ("errorDivClass" in options && typeof options.errorDivClass === "string") {
-            valuedator.config.errorDivClass = options.errorDivClass;
+        if ("errorMessageClass" in options && typeof options.errorMessageClass === "string") {
+            valuedator.config.errorMessageClass = options.errorMessageClass;
         }
 
         if ("message" in options && func.isObject(options.message)) {
