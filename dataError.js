@@ -1,22 +1,50 @@
-import chks from "./data/innerChks";
+import chks from "./innerChks";
 
-function dataErrorChk(value, chk){
+function dataErrorChk(item, chk){
     
-    if (process.env.NODE_ENV === 'development') {
+    let warn_arr = [];
+
+    if (chk === undefined) {
+
+        for (let prop in item) {
+
+            if (prop in chks) {
+
+                for (let key in chks[prop]){
+
+                    if (chks[prop][key](item[prop])) {
+        
+                        warn_arr.push(key);
+                                    
+                    }
+        
+                }
+
+            }
+
+        }
+
+    } else {
 
         for (let key in chks[chk]){
 
-            if (!hasError && chks[chk][key](value)) {
+            if (chks[chk][key](item)) {
 
-                return {warn : key};
+                warn_arr.push(key);
                             
             }
 
         }
-        
+
     }
 
-    return false;
+    if (warn_arr.length > 0 && process.env.NODE_ENV === 'development') {
+
+        return warn_arr;
+
+    }
+
+    return true;
 
 }
     

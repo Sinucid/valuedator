@@ -16,8 +16,6 @@ export default {
 
             func.mergeObj(true, valuedator.config.message, options.message)
 
-            // Object.assign(valuedator.config.message, options.message);
-
         }
         
         Vue.prototype.$valuedator = valuedator.validate;
