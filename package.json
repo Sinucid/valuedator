@@ -4,7 +4,12 @@
     "homepage": "https://github.com/Sinucid/valuedator",
     "description": "Simple validator by value",
     "main": "main.js",
-    "keywords": ["vuejs", "validate", "v-model", "value"],
+    "keywords": [
+        "vuejs",
+        "validate",
+        "v-model",
+        "value"
+    ],
     "author": "Sinucid",
     "license": "MIT",
     "devDependencies": {
