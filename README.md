@@ -86,9 +86,12 @@ Uses a regular expression to test or a string. If a string is passed, one of the
 Built-in templates for testing:
 ```
 
-    "email" # /^.+@.+\..+$/
-    "url"  # ^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
-    "ipv4" # /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/
+    "email" 
+    # /^.+@.+\..+$/
+    "url"  
+    # ^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+    "ipv4" 
+    # /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/
 
 ```
 
