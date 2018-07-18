@@ -122,7 +122,7 @@ If not set, the built-in set of styles will be applied.
 A string with the text describing the error. If not specified, the built-in messages for this type of error will be used.
 
 Built-in error messages:
-```
+``` javascript
 
     alert : "Data input error. Check the correctness of the information entered and fill the required fields.",
     required : "Required.",
