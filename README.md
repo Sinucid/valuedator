@@ -1,22 +1,23 @@
 # valuedator
----
-## Description
+
+## Description 
+
 A simple validator by value.
 Sometimes there are cases that simple validation on the Input field is not convenient: input fields in different forms or components, you must first process the input value, before validating, for example, calculate the exchange rate, or collect together the credit card number from the fields. It may not even be your code, and you do not want to change its structure.
 Using this library, you can validate already end values.
----
+
 ## Setup
 ``` 
 npm install valuedator --save
 ``` 
----
+
 ## Install in Vuejs
 ``` javascript
 import Vue from 'Vue';
 import valuedator from 'valuedator';
 Vue.use(valuedator, options = {});
 ```
----
+
 ## Usage
 ``` javascript
 export default {
@@ -123,8 +124,6 @@ CSS selector or HTMLElement, related to an existing DOM element, inside which wi
 **Required property**
 > You can use to collect all error messages by specifying in each validation object a reference to the same DOM element. (the "appendChild" method is used).
 
-
-
 ##### CLS
 String. Your own class that will be added to decorate the errorMessage element with an error.
 If not set, the built-in set of styles will be applied.
@@ -145,7 +144,6 @@ Built-in error messages:
     pattern : "Does not match the pattern.",
 
 ```
----
 ## Сustom Options
 When the plugin is initialized via "Vue.use", the second parameter can be passed an object with user-defined options.
 
@@ -169,19 +167,16 @@ String. Class name, which will be applied by default to errorMessage.
 #### messages
 An object describing the errors. You can send your error texts or your own localization. The name of the standard error properties for overwriting is listed in subsection **messageText**.  
 
----
 ## Priority of options
 The options that you pass directly to the function for validation have the highest priority.
 > Build-in options < installation options < value object options
 
----
 ## Error handling when passing validation parameters
 
 The type of parameters to be transferred to objects for validation are strongly typed. This is followed by the internal plugin mechanism.
 In development mode: "process.env.NODE_ENV === 'development'", when you send a wrong type of parameter, console.warn will be generated and this value will not be validated. The console will describe in detail the type of error and with which valid value it is associated.
 >In production, all errors in the data types for validation will be ignored, and the value for validation will always pass through it so as not to break the overall operation of the program. Carefully adjust each valid value.
 
----
 ## Examples
 
 #### Simple example
