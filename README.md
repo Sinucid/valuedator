@@ -74,6 +74,8 @@ The value to be checked : String or Number.
 
 ### Validation templates
 
+> Theoretically, you can specify all 3 checks (number, chars, pattern), but it is necessary to hinder the logic of this decision. In most cases, one or two types are sufficient.
+
 #### number
 Special check for number or range : Array.
 An array that takes up to two numeric parameters to set the minimum and maximum values. If you transfer only one value, a lower limit check will be performed. 
@@ -95,8 +97,6 @@ Built-in patterns for testing:
     "ipv4" - /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/
 
 ```
-
-> Theoretically, you can specify all 3 checks, but it is necessary to hinder the logic of this decision. In most cases, one or two types are sufficient.
 
 #### errorInput
 An object with parameters to change the CSS styles of the input field associated with the value.
@@ -217,7 +217,7 @@ The simplest example of validation. If at least one field is not filled, "alert"
           return {
             v1 : "",
             v2 : "",
-            v3 " "",
+            v3 : "",
           }
         },
         methods: {
@@ -277,7 +277,7 @@ The simplest example of validation. If at least one field is not filled, "alert"
           return {
             v1 : "",
             v2 : "",
-            v3 " "",
+            v3 : "",
             valarr : [
                 {
                     value : this.v1,
