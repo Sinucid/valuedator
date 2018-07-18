@@ -69,7 +69,7 @@ If you need a more detailed test, you must pass an object to the array with the 
 ```
 
 #### value
-The value to be checked : String or Number.  
+The value to be checked : String or Number. The presence of this property makes the value required to fill.
 <b>Required property</b>
 
 ### Validation templates
@@ -124,7 +124,7 @@ CSS selector or HTMLElement, related to an existing DOM element, inside which wi
 **Required property**
 > You can use to collect all error messages by specifying in each validation object a reference to the same DOM element. (the "appendChild" method is used).
 
-##### CLS
+##### cls
 String. Your own class that will be added to decorate the errorMessage element with an error.
 If not set, the built-in set of styles will be applied.
 
@@ -325,4 +325,17 @@ The simplest example of validation. If at least one field is not filled, "alert"
     
 ```
 
+## Compatibility
 
+The plugin does not use any ES6 capabilities and should theoretically work in IE11-. But it was not tested.
+
+## Remarks, suggestions and bugs
+
+I'm a beginner developer, and your feedback is important to me. Also, your bug reports will not be superfluous. I tried to catch all errors as much as possible, but they are possible. I will be happy with your feedback and criticism:
+
+**sin_x@bk.ru**
+**sinucid@gmail.com**
+
+## License
+
+MIT
