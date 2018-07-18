@@ -18,7 +18,7 @@ Vue.use(valuedator, options = {});
 ```
 
 ## Usage
-```
+``` vue
 export default {
   methods:{
     sendData()
