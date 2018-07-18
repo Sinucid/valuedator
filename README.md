@@ -1,22 +1,22 @@
 # valuedator
-
+---
 ## Description
 A simple validator by value.
 Sometimes there are cases that simple validation on the Input field is not convenient: input fields in different forms or components, you must first process the input value, before validating, for example, calculate the exchange rate, or collect together the credit card number from the fields. It may not even be your code, and you do not want to change its structure.
 Using this library, you can validate already end values.
-
+---
 ## Setup
 ``` 
 npm install valuedator --save
 ``` 
-
+---
 ## Install in Vuejs
-``` 
+``` javascript
 import Vue from 'Vue';
 import valuedator from 'valuedator';
 Vue.use(valuedator, options = {});
 ```
-
+---
 ## Usage
 ``` javascript
 export default {
@@ -68,12 +68,15 @@ If you need a more detailed test, you must pass an object to the array with the 
 ```
 
 #### value
-The value to be checked : String or Number.
+The value to be checked : String or Number.  
 <b>Required property</b>
+
+### Validation templates
 
 #### number
 Special check for number or range : Array.
-An array that takes up to two numeric parameters to set the minimum and maximum values. If you transfer only one value,               a lower limit check will be performed. If you pass an empty array, it checks for a number. 
+An array that takes up to two numeric parameters to set the minimum and maximum values. If you transfer only one value, a lower limit check will be performed. 
+> If you pass an empty array, it checks for a number. 
 
 #### chars
 Special check for characters length : Array.
@@ -91,12 +94,16 @@ Built-in patterns for testing:
     "ipv4" - /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/
 
 ```
+
+> Theoretically, you can specify all 3 checks, but it is necessary to hinder the logic of this decision. In most cases, one or two types are sufficient.
+
 #### errorInput
 An object with parameters to change the CSS styles of the input field associated with the value.
 Accepts 2 properties:
 
 ##### elem
-CSS selector or HTMLElement, related to input. <b>Required property</b>
+CSS selector or HTMLElement, related to input.  
+**Required property**
 
 ##### cls
 String. Your own class that will be added to decorate the Input element with an error.
@@ -105,14 +112,18 @@ If not set, the built-in set of styles will be applied.
 #### errorMessage
 An object with parameters to change the CSS styles of the input field associated with the value.
 Accepts 2 properties:
+> The first property can be passed one of two: "before" or "container". One of them will be selected, the priority of "before".
 
 ##### before
-CSS selector or HTMLElement, related to DOM element after that, a DIV will be added with an error message.<b>Required property</b>
-
-##### or
+CSS selector or HTMLElement, related to DOM element after that, a DIV will be added with an error message.  
+**Required property**
 
 ##### container
-CSS selector or HTMLElement, related to an existing DOM element, inside which will be added a DIV with an error message. You can use to collect all error messages by specifying in each validation object a reference to the same DOM element. (the "appendChild" method is used)<b>Required property</b>
+CSS selector or HTMLElement, related to an existing DOM element, inside which will be added a DIV with an error message.
+**Required property**
+> You can use to collect all error messages by specifying in each validation object a reference to the same DOM element. (the "appendChild" method is used).
+
+
 
 ##### CLS
 String. Your own class that will be added to decorate the errorMessage element with an error.
@@ -134,3 +145,189 @@ Built-in error messages:
     pattern : "Does not match the pattern.",
 
 ```
+---
+## Сustom Options
+When the plugin is initialized via "Vue.use", the second parameter can be passed an object with user-defined options.
+
+Available options:
+``` javascript
+
+    Vue.use(valuedator,{
+        errorInputClass : "", //string
+        errorMessageClass : "", //string
+        messages : {} // object
+    })
+    
+```
+
+#### errorInputClass
+String. Class name, which will be applied by default to Input elements with errors.
+
+#### errorMessageClass
+String. Class name, which will be applied by default to errorMessage.
+
+#### messages
+An object describing the errors. You can send your error texts or your own localization. The name of the standard error properties for overwriting is listed in subsection **messageText**.  
+
+---
+## Priority of options
+The options that you pass directly to the function for validation have the highest priority.
+> Build-in options < installation options < value object options
+
+---
+## Error handling when passing validation parameters
+
+The type of parameters to be transferred to objects for validation are strongly typed. This is followed by the internal plugin mechanism.
+In development mode: "process.env.NODE_ENV === 'development'", when you send a wrong type of parameter, console.warn will be generated and this value will not be validated. The console will describe in detail the type of error and with which valid value it is associated.
+>In production, all errors in the data types for validation will be ignored, and the value for validation will always pass through it so as not to break the overall operation of the program. Carefully adjust each valid value.
+
+---
+## Examples
+
+#### Simple example
+
+The simplest example of validation. If at least one field is not filled, "alert" will be displayed with an error.
+
+``` javascript
+
+    import Vue from 'Vue';
+    import valuedator from 'valuedator';
+    Vue.use(valuedator);
+
+```
+
+``` javascript
+
+    <template>
+      <div>
+        <div id="d1">
+            <label for="i1">input 1:</label>
+            <input type="text" v-model="v1" id="i1"> 
+        </div>
+        <div id="d2">
+            <label for="i3">input 2:</label>
+            <input type="text" v-model="v2" id="i2"> 
+        </div>
+        <div id="d3">
+            <label for="i3">input 3:</label>
+            <input type="text" v-model="v3" id="i3"> 
+        </div>
+        
+        <button @click.prevent="testData">check</button>
+      </div>
+    </template>
+    <script>
+      new Vue({
+        data () {
+          return {
+            v1 : "",
+            v2 : "",
+            v3 " "",
+          }
+        },
+        methods: {
+          testData() {
+            if (this.$valuedator([this.v1, this.v2, this.v3])) {
+                    alert("success!!!!");
+            }
+          }
+        }
+      })
+    </script>
+    
+```
+
+#### Advanced example
+
+``` javascript
+
+    import Vue from 'Vue';
+    import valuedator from 'valuedator';
+    Vue.use(valuedator{
+    
+        errorMessageClass : "someclass",
+        messages : {
+            number : "some new error text",
+            email : "email bla-bla-bla"
+        }
+        
+    });
+
+```
+
+``` javascript
+
+    <template>
+      <div>
+        <div id="d1">
+            <label for="i1">number:</label>
+            <input type="text" v-model="v1" id="i1"> 
+        </div>
+        <div id="d2">
+            <label for="i3">email:</label>
+            <input type="text" v-model="v2" id="i2" ref="input2"> 
+        </div>
+        <div id="d3">
+            <label for="i3">number:</label>
+            <input type="text" v-model="v3" id="i3"> 
+        </div>
+        <div class="container_error_3"></div>
+        
+        <button @click.prevent="testData">check</button>
+      </div>
+    </template>
+    <script>
+      new Vue({
+        data () {
+          return {
+            v1 : "",
+            v2 : "",
+            v3 " "",
+            valarr : [
+                {
+                    value : this.v1,
+                    number : [1, 7],
+                    errorInput : {
+                        elem : "#i1",
+                        cls : "someclass2"
+                    },
+                },
+                {
+                    value : this.v2,
+                    pattern : "3mail",
+                    errorInput : {
+                        elem : this.$refs.input3,                        
+                    },
+                    errorMessage : {
+                        before : "#d2",
+                    },
+                    messageText : "error error ERROR!!!"
+                },
+                {
+                    value : this.v3,
+                    chars : [10],
+                    errorInput : {
+                        elem : "#i3",
+                        class : "someclass3"
+                    },
+                    errorMessage : {
+                        container : ".container_error_3",
+                        class : "container_class"
+                    },
+                },
+            ]
+          }
+        },
+        methods: {
+          testData() {
+            if (this.$valuedator(this.valarr)) {
+                    alert("success!!!!");
+            }
+          }
+        }
+      })
+    </script>
+    
+```
+
+
