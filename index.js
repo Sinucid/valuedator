@@ -1,5 +1,5 @@
-import valuedator from "./main.js";
-import func from "./func.js";
+import valuedator from "./core/main.js";
+import func from "./core/func.js";
 
 export default {
     install(Vue, options = {}) {

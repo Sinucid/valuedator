@@ -7,23 +7,13 @@ function Func(){
         return a - b;
     }
 
-    // this.c = function(text){
-        
-    //     if (text !== undefined) {
-    //         console.log(text)
-    //     } else {
-    //         console.log("th");
-    //     }
-        
-    // }
-
     this.mergeObj = function(onlySameProps, obj1) {
 
         if (arguments.length >= 3) {
 
-            let target_obj = obj1;
+            var target_obj = obj1;
 
-            for (let i = 2; i < arguments.length; i++) {
+            for (var i = 2; i < arguments.length; i++) {
 
                 if (!this.isObject(target_obj)) {
 
@@ -31,7 +21,7 @@ function Func(){
                     
                 }
 
-                let copy_obj = arguments[i];
+                var copy_obj = arguments[i];
 
                 if (!this.isObject(copy_obj)) {
 
@@ -39,7 +29,7 @@ function Func(){
                     
                 }
 
-                for (let prop in copy_obj) {
+                for (var prop in copy_obj) {
 
                     if (onlySameProps) {
 
@@ -70,6 +60,6 @@ function Func(){
         
 }
 
-let func = new Func;
+var func = new Func;
 
 export default func;

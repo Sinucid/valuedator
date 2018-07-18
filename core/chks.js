@@ -1,5 +1,5 @@
 import func from "./func.js";
-import patterns from "./data/patterns.js";
+import patterns from "./../data/patterns.js";
 
 function Chk(){
 
@@ -47,7 +47,7 @@ function Chk(){
 
         }
 
-        let range_sort = range.sort(func.arrsort);
+        var range_sort = range.sort(func.arrsort);
         
         return range_sort[0] <= +value && +value <= range_sort[1] ? 
                true : { message : "The value must be in the range from " + range_sort[0] + " to " + range_sort[1] + "."};
@@ -63,16 +63,15 @@ function Chk(){
 
         }
 
-        let chars_sort = chars.sort(func.arrsort);
+        var chars_sort = chars.sort(func.arrsort);
 
         return chars_sort[0] <= value.length && value.length <= chars_sort[1] ? 
                true : { message : "The number of characters must be between " + chars_sort[0] + " and " + chars_sort[1] + "."};
-
 
     };
 
 }
 
-let chk = new Chk();
+var chk = new Chk();
 
 export default chk;

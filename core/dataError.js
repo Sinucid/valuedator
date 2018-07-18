@@ -1,16 +1,16 @@
-import chks from "./innerChks";
+import chks from "./innerChks.js";
 
 function dataErrorChk(item, chk){
     
-    let warn_arr = [];
+    var warn_arr = [];
 
     if (chk === undefined) {
 
-        for (let prop in item) {
+        for (var prop in item) {
 
             if (prop in chks) {
 
-                for (let key in chks[prop]){
+                for (var key in chks[prop]){
 
                     if (chks[prop][key](item[prop])) {
         
@@ -26,7 +26,7 @@ function dataErrorChk(item, chk){
 
     } else {
 
-        for (let key in chks[chk]){
+        for (var key in chks[chk]){
 
             if (chks[chk][key](item)) {
 

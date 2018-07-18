@@ -1,5 +1,5 @@
 import func from "./func.js";
-import patterns from "./data/patterns.js";
+import patterns from "./../data/patterns.js";
 
 export default {
     valarr : {

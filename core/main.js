@@ -1,10 +1,9 @@
 import chk from "./chks.js";
-import dataErrorChk from "./dataError";
-import style_default from "./data/stylesDefault.js";
+import dataErrorChk from "./dataError.js";
 import func from "./func.js";
-import patterns from "./data/patterns.js";
-import message_default from "./data/errorMsgDefault.js";
-import warn_message from "./data/innerWarn.js";
+import style_default from "./../data/stylesDefault.js";
+import message_default from "./../data/errorMsgDefault.js";
+import warn_message from "./../data/innerWarn.js";
 
 function Valuedator(){
 
@@ -16,11 +15,11 @@ function Valuedator(){
 
     }
 
-    let _conf = this.config;
+    var _conf = this.config;
 
     function chkData(callback, opt_arr, i) {
 
-        let result = callback.apply(null, opt_arr);
+        var result = callback.apply(null, opt_arr);
 
         if (typeof result === "boolean") {
 
@@ -28,15 +27,15 @@ function Valuedator(){
 
         }
 
-        let warn_msg = "";
+        var warn_msg = "";
 
-        for (let j = 0; j < result.length; j++) {
+        for (var j = 0; j < result.length; j++) {
 
             warn_msg += (j + 1) + ":" + warn_message[result[j]] + "\r\n";
 
         }
 
-        let index = i !== undefined ? " in an array element [" + i + "]," : "";
+        var index = i !== undefined ? " in an array element [" + i + "]," : "";
         console.warn("DATA ERROR:" + index + "\r\n" + warn_msg)
 
         return false;
@@ -51,14 +50,14 @@ function Valuedator(){
 
         }
 
-        let noError = true,
+        var noError = true,
             hasStyles = false;
                  
         clearErrorDiv();
 
-        for (let i = 0; i < valarr.length; i++){
+        for (var i = 0; i < valarr.length; i++){
 
-            let errorMsg = "",
+            var errorMsg = "",
                     item = valarr[i];
 
             if (!chkData(dataErrorChk, [item, "item"], i)) {
@@ -77,7 +76,7 @@ function Valuedator(){
 
                 clearErrorInput(item);
 
-                for (let param in item) {
+                for (var param in item) {
 
                     if (!errorMsg) {
 
@@ -109,7 +108,7 @@ function Valuedator(){
 
                     if ("message" in item) {
 
-                        errorMsg = item.message;
+                        errorMsg = item.messageText;
 
                     }
 
@@ -123,9 +122,9 @@ function Valuedator(){
                             
                     }
 
-                    if ("errorDiv" in item) {
+                    if ("errorMessage" in item) {
 
-                        if (chgStylesMessage(item.errorDiv, errorMsg)) {
+                        if (chgStylesMessage(item.errorMessage, errorMsg)) {
                             hasStyles = true;
                         }
                                                     
@@ -158,7 +157,7 @@ function Valuedator(){
 
     function chgStylesInput(obj){
 
-        let cls,
+        var cls,
             elem = obj.elem instanceof HTMLElement ? obj.elem : document.querySelector(obj.elem);
 
         if ("cls" in obj) {
@@ -187,7 +186,7 @@ function Valuedator(){
 
     function chgStylesMessage(obj, msg){
 
-        let elem, div, cls;
+        var elem, div, cls;
 
         if ("before" in obj) {
 
@@ -244,7 +243,7 @@ function Valuedator(){
         
         if ("errorInput" in item && "elem" in item.errorInput) {
 
-            let cls,
+            var cls,
                 elem = item.errorInput.elem instanceof HTMLElement ? 
                 item.errorInput.elem : 
                 document.querySelector(item.errorInput.elem);
@@ -275,7 +274,7 @@ function Valuedator(){
 
     function clearErrorDiv(){
         
-        let divs = document.querySelectorAll(".errormsg-div");
+        var divs = document.querySelectorAll(".errormsg-div");
 
         if (divs) {
             divs.forEach(div => {
@@ -289,6 +288,6 @@ function Valuedator(){
 
 }
 
-let valuedator = new Valuedator;
+var valuedator = new Valuedator;
 
 export default valuedator;
