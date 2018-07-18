@@ -278,41 +278,45 @@ The simplest example of validation. If at least one field is not filled, "alert"
             v1 : "",
             v2 : "",
             v3 : "",
-            valarr : [
-                {
-                    value : this.v1,
-                    number : [1, 7],
-                    errorInput : {
-                        elem : "#i1",
-                        cls : "someclass2"
-                    },
-                },
-                {
-                    value : this.v2,
-                    pattern : "email",
-                    errorInput : {
-                        elem : this.$refs.input3,                        
-                    },
-                    errorMessage : {
-                        before : "#d2",
-                    },
-                    messageText : "error error ERROR!!!"
-                },
-                {
-                    value : this.v3,
-                    chars : [10],
-                    errorInput : {
-                        elem : "#i3",
-                        class : "someclass3"
-                    },
-                    errorMessage : {
-                        container : ".container_error_3",
-                        class : "container_class"
-                    },
-                },
-            ]
           }
         },
+        computed : {
+            valarr() {
+                return [
+                    {
+                        value : this.v1,
+                        number : [1, 7],
+                        errorInput : {
+                            elem : "#i1",
+                            cls : "someclass2"
+                        },
+                    },
+                    {
+                        value : this.v2,
+                        pattern : "email",
+                        errorInput : {
+                            elem : this.$refs.input2,                        
+                        },
+                        errorMessage : {
+                            before : "#d2",
+                        },
+                        messageText : "error error ERROR!!!"
+                    },
+                    {
+                        value : this.v3,
+                        chars : [10],
+                        errorInput : {
+                            elem : "#i3",
+                            class : "someclass3"
+                        },
+                        errorMessage : {
+                            container : ".container_error_3",
+                            class : "container_class"
+                        },
+                    }
+                ]
+            }
+        }
         methods: {
           testData() {
             if (this.$valuedator(this.valarr)) {
