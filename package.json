@@ -1,6 +1,6 @@
 {
     "name": "valuedator",
-    "version": "0.7.0",
+    "version": "0.7.5",
     "homepage": "https://github.com/Sinucid/valuedator",
     "description": "Simple validator by value",
     "main": "main.js",
