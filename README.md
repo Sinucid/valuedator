@@ -289,7 +289,7 @@ The simplest example of validation. If at least one field is not filled, "alert"
                 },
                 {
                     value : this.v2,
-                    pattern : "3mail",
+                    pattern : "email",
                     errorInput : {
                         elem : this.$refs.input3,                        
                     },
