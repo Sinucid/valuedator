@@ -106,7 +106,7 @@ function Valuedator(){
 
                 if (errorMsg !== "") {
 
-                    if ("message" in item) {
+                    if ("messageText" in item) {
 
                         errorMsg = item.messageText;
 
