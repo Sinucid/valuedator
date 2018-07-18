@@ -300,7 +300,7 @@ The simplest example of validation. If at least one field is not filled, "alert"
                         errorMessage : {
                             before : "#d2",
                         },
-                        messageText : "error error ERROR!!!"
+                        messageText : "error error ERROR!"
                     },
                     {
                         value : this.v3,
