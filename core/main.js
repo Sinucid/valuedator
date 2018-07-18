@@ -11,7 +11,7 @@ function Valuedator(){
 
         errorInputClass : "",
         errorMessageClass : "",
-        message : message_default,
+        messages : message_default,
 
     }
 

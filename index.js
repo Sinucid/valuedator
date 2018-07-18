@@ -12,9 +12,9 @@ export default {
             valuedator.config.errorMessageClass = options.errorMessageClass;
         }
 
-        if ("message" in options && func.isObject(options.message)) {
+        if ("messages" in options && func.isObject(options.messages)) {
 
-            func.mergeObj(true, valuedator.config.message, options.message)
+            func.mergeObj(true, valuedator.config.messages, options.messages)
 
         }
         
