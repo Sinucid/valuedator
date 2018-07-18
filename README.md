@@ -338,4 +338,12 @@ I'm a beginner developer, and your feedback is important to me. Also, your bug r
 
 ## License
 
+<<<<<<< HEAD
 MIT
+=======
+<<<<<<< HEAD
+MIT
+=======
+MIT
+>>>>>>> 1e3d0022de34fe9b668f34a4a4f110ae25cc00ee
+>>>>>>> 589defa96df413823dfbfa1391097193360bf004
