@@ -333,17 +333,9 @@ The plugin does not use any ES6 capabilities and should theoretically work in IE
 
 I'm a beginner developer, and your feedback is important to me. Also, your bug reports will not be superfluous. I tried to catch all errors as much as possible, but they are possible. I will be happy with your feedback and criticism:
 
-**sin_x@bk.ru**
+**sin_x@bk.ru**  
 **sinucid@gmail.com**
 
 ## License
 
-<<<<<<< HEAD
 MIT
-=======
-<<<<<<< HEAD
-MIT
-=======
-MIT
->>>>>>> 1e3d0022de34fe9b668f34a4a4f110ae25cc00ee
->>>>>>> 589defa96df413823dfbfa1391097193360bf004
