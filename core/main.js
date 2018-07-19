@@ -12,6 +12,7 @@ function Valuedator(){
         errorInputClass : "",
         errorMessageClass : "",
         messages : message_default,
+        style_default,
 
     }
 
@@ -74,8 +75,6 @@ function Valuedator(){
     
                 }
 
-                clearErrorInput(item);
-
                 for (var param in item) {
 
                     if (!errorMsg) {
@@ -114,20 +113,10 @@ function Valuedator(){
 
                     noError = false;
 
-                    if ("errorInput" in item) {
+                    if (addErrorStyles(item, errorMsg, _conf)){
 
-                        if (chgStylesInput(item.errorInput)) {
-                            hasStyles = true;
-                        }
-                            
-                    }
+                        hasStyles = true;
 
-                    if ("errorMessage" in item) {
-
-                        if (chgStylesMessage(item.errorMessage, errorMsg)) {
-                            hasStyles = true;
-                        }
-                                                    
                     }
 
                 }
@@ -155,122 +144,121 @@ function Valuedator(){
 
     }
 
-    function chgStylesInput(obj){
+    function addErrorStyles(item, message, config){
 
-        var cls,
-            elem = obj.elem instanceof HTMLElement ? obj.elem : document.querySelector(obj.elem);
+        var hasStyles = false;
 
-        if ("cls" in obj) {
+        if ("errorInput" in item) {
 
-            cls = obj.cls;
+            var obj = item.errorInput,
+                cls_i,
+                elem_i = obj.elem instanceof HTMLElement ? obj.elem : document.querySelector(obj.elem);
+    
+            if ("cls" in obj) {
+    
+                cls_i = obj.cls;
+    
+            } else if (config.errorInputClass !== "") {
+    
+                cls_i = config.errorInputClass;
+    
+            }
+    
+            if (cls_i) {
+    
+                elem_i.classList.add(cls_i);
+    
+            } else {
+    
+                func.mergeObj(false, elem_i.style, config.style_default.input);
+    
+            }
 
-        } else if (_conf.errorInputClass !== "") {
+            (function(){
+                
+                elem_i.addEventListener("focusin", clearStyles);
 
-            cls = _conf.errorInputClass;
+                function clearStyles($event){
 
-        }
+                    if (cls_i) {
 
-        if (cls) {
-
-            elem.classList.add(cls);
-
-        } else {
-
-            func.mergeObj(false, elem.style, style_default.input);
-
-        }
-
-        return true;
-
-    };
-
-    function chgStylesMessage(obj, msg){
-
-        var elem, div, cls;
-
-        if ("before" in obj) {
-
-            elem = obj.before;
-            
-        } else if ("container" in obj) {
-
-            elem = obj.container;
-
-        }
-
-        elem = elem instanceof HTMLElement ? elem : document.querySelector(elem);
-
-        div = document.createElement("div");
-        div.className = "errormsg-div"
-        div.innerText = msg;
-
+                        elem_i.classList.remove(cls_i)
         
-        if ("cls" in obj) {
+                    } else {
+        
+                        elem_i.style = "";
+        
+                    }
 
-            cls = obj.cls;
+                    elem_i.removeEventListener("focusin", clearStyles);
 
-        } else if (_conf.errorMessageClass !== "") {
+                }
 
-            cls = _conf.errorMessageClass;
+            })();
 
-        }
-
-        if (cls) {
-
-            div.classList.add(cls);
-
-        } else {
-
-            func.mergeObj(false, div.style, style_default.div);
+            hasStyles = true;
 
         }
 
-        if ("before" in obj) {
+        if ("errorMessage" in item) {
 
-            elem.parentNode.insertBefore(div, elem.nextSibling);
-
-        } else if ("container" in obj){
-
-            elem.appendChild(div);
+            var obj = item.errorMessage,
+                elem_m, div_m, cls_m;
+    
+            if ("before" in obj) {
+    
+                elem_m = obj.before;
+                
+            } else if ("container" in obj) {
+    
+                elem_m = obj.container;
+    
+            }
+    
+            elem_m = elem_m instanceof HTMLElement ? elem_m : document.querySelector(elem_m);
+    
+            div_m = document.createElement("div");
+            div_m.className = "errormsg-div"
+            div_m.innerText = message;
+    
+            
+            if ("cls" in obj) {
+    
+                cls_m = obj.cls;
+    
+            } else if (config.errorMessageClass !== "") {
+    
+                cls_m = config.errorMessageClass;
+    
+            }
+    
+            if (cls_m) {
+    
+                div_m.classList.add(cls);
+    
+            } else {
+    
+                func.mergeObj(false, div_m.style, config.style_default.message);
+    
+            }
+    
+            if ("before" in obj) {
+    
+                elem_m.parentNode.insertBefore(div_m, elem_m.nextSibling);
+    
+            } else if ("container" in obj){
+    
+                elem_m.appendChild(div);
+    
+            }
+    
+            hasStyles = true;
 
         }
 
-        return true;
+        return hasStyles;
 
     }
-
-    function clearErrorInput(item){
-        
-        if ("errorInput" in item && "elem" in item.errorInput) {
-
-            var cls,
-                elem = item.errorInput.elem instanceof HTMLElement ? 
-                item.errorInput.elem : 
-                document.querySelector(item.errorInput.elem);
-
-            if ("cls" in item) {
-
-                cls = item.cls;
-
-            } else if (_conf.errorInputClass !== "") {
-
-                cls = _conf.errorInputClass;
-
-            }
-
-            if (cls) {
-
-                elem.classList.remove(cls)
-
-            } else {
-
-                elem.style = "";
-
-            }
-
-        }
-
-    };
 
     function clearErrorDiv(){
         

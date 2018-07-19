@@ -1,4 +1,4 @@
-let main_color = "#ffaaaa"
+var main_color = "#ffaaaa"
 
 export default {
     input : {
@@ -6,7 +6,7 @@ export default {
         backgroundColor : main_color,
 
     },
-    div : {
+    message : {
 
         width : "100%",
         color : main_color,

@@ -27,9 +27,10 @@ export default {
         no_elem : function(chk){return !"elem" in chk},
         elem_type : function(chk){return !(chk.elem instanceof HTMLElement || typeof elem !== "string")},
         elem_exists : function(chk){return !(chk.elem instanceof HTMLElement ? chk.elem : document.querySelector(chk.elem));}, 
-        cls_type : function(chk){return "cls" in chk && typeof chk.cls !== "string"},
+        cls_type : function(chk){return "cls" in chk && !(typeof chk.cls === "string" || Array.isArray(chk.cls))},
+        cls_arr_type : function(chk){return Array.isArray(chk.cls) && chk.cls.some(function(item){return typeof item !== "string" })},
     },
-    errorDiv : {
+    errorMessage : {
         no_elem : function(chk){return !("before" || "container" in chk)},
         elem_type : function(chk){let elem = (chk.before || chk.container);
                                   return !elem instanceof HTMLElement || typeof elem !== "string"
@@ -41,7 +42,8 @@ export default {
             }
             return false;
         }, 
-        cls_type : function(chk){return "cls" in chk && typeof chk.cls !== "string"},
+        cls_type : function(chk){return "cls" in chk && !(typeof chk.cls === "string" || Array.isArray(chk.cls))},
+        cls_arr_type : function(chk){return Array.isArray(chk) && chk.some(function(item){return typeof item !== "string" })},
     },
     message : {
         msg_type : function(chk){return !(typeof chk === "string")}

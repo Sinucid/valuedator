@@ -12,7 +12,8 @@ export default {
     elem_type : "The 'elem', 'before' or 'container' property must be an HTMLElement or CSS selector.",
     elem_exists : "Input element does not exist.",
     container_exists : "Block container for messages with errors does not exist.",
-    cls_type : "The 'cls' property must be a string.",
+    cls_type : "The 'cls' The property must be a string or an array of strings.",
+    cls_arr_type : "The elements of the array 'cls' must be strings.",
     msg_type : "The 'msg' property must be a string describing the error",
 
 }

@@ -57,11 +57,11 @@ If you need a more detailed test, you must pass an object to the array with the 
     pattern : RegExp || string,
     errorInput : {
         elem : Css selector || HTMLElement,
-        cls : string
+        cls : string || array
     },
     errorMessage : {
         before || container : Css selector || HTMLElement,
-        cls : string
+        cls : string || array
     },
     messageText : string
 
@@ -107,7 +107,7 @@ CSS selector or HTMLElement, related to input.
 **Required property**
 
 ##### cls
-String. Your own class that will be added to decorate the Input element with an error.
+String or array of classes. Your own classes that will be added to decorate the Input elements with an error.
 If not set, the built-in set of styles will be applied.
 
 #### errorMessage
@@ -125,7 +125,7 @@ CSS selector or HTMLElement, related to an existing DOM element, inside which wi
 > You can use to collect all error messages by specifying in each validation object a reference to the same DOM element. (the "appendChild" method is used).
 
 ##### cls
-String. Your own class that will be added to decorate the errorMessage element with an error.
+String or array of classes. Your own classes that will be added to decorate the errorMessage elements with an error.
 If not set, the built-in set of styles will be applied.
 
 #### messageText
